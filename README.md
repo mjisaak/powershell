@@ -1,7 +1,7 @@
 # PowerShell
 This repository contains some PowerShell scripts / snippets
 
-## Cnvenience method to copy a whole directory using Robocopy:
+## Convenience method to copy a whole directory using Robocopy:
 ```powershell
 function Copy-Directory
 {
@@ -26,5 +26,32 @@ function Copy-Directory
 
 	$param = @('/E', '/xf', $Exclude)        
     Robocopy $Source $Destination @param
+}
+```
+## Test Database Connectivity
+Uses the SqlConnection class to test a connection. 
+```powershell
+function Test-SQLConnection
+{    
+    [OutputType([bool])]
+    Param
+    (
+        [Parameter(Mandatory=$true,
+                    ValueFromPipelineByPropertyName=$true,
+                    Position=0)]
+        $ConnectionString
+    )
+    try
+    {
+        $sqlConnection = New-Object System.Data.SqlClient.SqlConnection $ConnectionString;
+        $sqlConnection.Open();
+        $sqlConnection.Close();
+
+        return $true;
+    }
+    catch
+    {
+        return $false;
+    }
 }
 ```
