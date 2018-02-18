@@ -55,3 +55,8 @@ function Test-SQLConnection
     }
 }
 ```
+
+Usage example:
+```powershell
+Test-SQLConnection "Data Source=localhost;database=myDB;User ID=myUser;Password=myPassword;"
+```
