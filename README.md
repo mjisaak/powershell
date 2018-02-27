@@ -29,7 +29,8 @@ function Copy-Directory
 }
 ```
 ## Test Database Connectivity
-Uses the SqlConnection class to test a connection. 
+https://stackoverflow.com/questions/29229109/test-database-connectivity/29229530#29229530
+Uses the SqlConnection class to test a connection.
 ```powershell
 function Test-SQLConnection
 {    
