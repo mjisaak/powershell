@@ -3,8 +3,11 @@
    Restrict the access of an Azure Web App to another Web App.
 .EXAMPLE
    Set-AccessRestrictionToAnotherWebApp.ps1 `
-    -SourceResourceGroupName 'my-source-rg' `
-    -SourceWebAppName
+        -SourceResourceGroupName 'my-source-rg' `
+        -SourceWebAppName 'my-source-web-app' `
+        -TargetResourceGroupName 'my-target-rg' `
+        -TargetWebAppName 'my-target-web-app' `
+        -Priority 100
 #>
 
 [CmdletBinding()]
@@ -27,5 +30,5 @@ param (
 
 (az webapp show -g $SourceResourceGroupName -n $SourceWebAppName --query '[possibleOutboundIpAddresses, outboundIpAddresses]' --output tsv) -join ',' -split ',' | 
 ForEach-Object {
-    az webapp config access-restriction add -g chacra-t-rg01 -n chacra-t-afunc-ingest --rule-name "ip_$($_)" --action Allow --ip-address "$($_)/32" -p $Priority
+    az webapp config access-restriction add -g $TargetResourceGroupName -n $TargetWebAppName --rule-name "ip_$($_)" --action Allow --ip-address "$($_)/32" -p $Priority
 }
