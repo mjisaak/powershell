@@ -29,6 +29,7 @@ param (
 )
 
 (az webapp show -g $SourceResourceGroupName -n $SourceWebAppName --query '[possibleOutboundIpAddresses, outboundIpAddresses]' --output tsv) -join ',' -split ',' | 
+Get-Unique |
 ForEach-Object {
     az webapp config access-restriction add -g $TargetResourceGroupName -n $TargetWebAppName --rule-name "ip_$($_)" --action Allow --ip-address "$($_)/32" -p $Priority
 }
